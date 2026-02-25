@@ -20,6 +20,7 @@ MyAnimeList Top 10,000 Anime Dataset을 활용하여 애니메이션 작품의 �
 ## 2. Dataset
 
 - Source: Kaggle - MyAnimeList Top 10,000 Anime Dataset
+  - https://www.kaggle.com/datasets/furkanark/myanimelist-top-10000-anime-dataset
 - Platform: MyAnimeList (MAL)
 - Observations: 9,999
 - 주요 변수:
