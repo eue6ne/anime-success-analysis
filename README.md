@@ -108,7 +108,103 @@ anime-success-analysis/
 
 ---
 
-## 7. Author
+## 7. How to Run
+
+### 1. Clone repository
+
+```bash
+git clone https://github.com/eue6ne/anime-success-analysis.git
+cd anime-success-analysis
+```
+
+### 2. Create virtual environment
+
+```bash
+python -m venv venv
+source venv/bin/activate  # macOS / Linux
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Set environment variables
+
+Create .env file in project root:
+```
+DB_HOST=localhost
+DB_USER=your_id
+DB_PASSWORD=your_password
+DB_NAME=anime_project
+```
+
+### 5. Create Database Schema
+
+```bash
+mysql -u your_id -p < sql/01_schema_extended.sql
+mysql -u your_id -p < sql/02_1_create_raw_entities.sql
+```
+
+### 6. Run ETL pipeline
+
+Load anime, genres, companies, characters, and voice actors.
+
+```bash
+python src/etl_pipeline.py
+```
+
+이 단계에서 다음 테이블이 모두 적재됩니다:
+	•	anime_dim
+	•	genre_dim / anime_genre_map
+	•	entities
+	•	company / anime_company
+	•	anime_character
+	•	anime_voice_actor
+
+### 7. Verify Data Load (Optional Check)
+
+```bash
+mysql -u your_id -p -e "
+USE anime_project;
+SELECT COUNT(*) AS anime_character_cnt FROM anime_character;
+SELECT COUNT(*) AS anime_voice_actor_cnt FROM anime_voice_actor;
+"
+```
+
+정상 실행 시 다음과 유사한 결과가 출력됩니다:
+	•	anime_character_cnt ≈ 79,654
+	•	anime_voice_actor_cnt ≈ 155,938
+
+
+### 8. Load Entity Master Tables
+
+```bash
+mysql -u your_id -p < sql/02_2_load_entities_master.sql
+```
+
+### 9. Build Feature View
+
+```bash
+mysql -u your_id -p < sql/05_build_features.sql
+```
+
+### 10. Generate Dataset
+
+```bash
+python src/make_dataset.py
+```
+
+### 11. Train Models
+
+```bash
+python src/train_models.py
+```
+
+---
+
+## 8. Author
 
 Personal Data Analysis Project  
 2026
