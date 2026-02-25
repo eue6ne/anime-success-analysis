@@ -1,0 +1,22 @@
+# Environment variables
+.env
+
+# Kaggle raw data
+data/raw/
+
+# Processed / generated data
+data/processed/
+reports/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+
+# Virtual environment
+venv/

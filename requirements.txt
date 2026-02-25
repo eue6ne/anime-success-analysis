@@ -1,0 +1,9 @@
+pandas==2.2.0
+numpy==1.26.4
+scikit-learn==1.4.0
+scipy==1.11.4
+statsmodels==0.14.1
+matplotlib==3.8.2
+seaborn==0.13.2
+mysql-connector-python==8.3.0
+python-dotenv==1.2.1
