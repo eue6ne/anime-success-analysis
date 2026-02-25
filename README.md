@@ -157,12 +157,12 @@ python src/etl_pipeline.py
 ```
 
 이 단계에서 다음 테이블이 모두 적재됩니다:
-	•	anime_dim
-	•	genre_dim / anime_genre_map
-	•	entities
-	•	company / anime_company
-	•	anime_character
-	•	anime_voice_actor
+-	anime_dim
+-	genre_dim / anime_genre_map
+-	entities
+-	company / anime_company
+-	anime_character
+-	anime_voice_actor
 
 ### 7. Verify Data Load (Optional Check)
 
@@ -175,8 +175,8 @@ SELECT COUNT(*) AS anime_voice_actor_cnt FROM anime_voice_actor;
 ```
 
 정상 실행 시 다음과 유사한 결과가 출력됩니다:
-	•	anime_character_cnt ≈ 79,654
-	•	anime_voice_actor_cnt ≈ 155,938
+-	anime_character_cnt ≈ 79,654
+-	anime_voice_actor_cnt ≈ 155,938
 
 
 ### 8. Load Entity Master Tables
