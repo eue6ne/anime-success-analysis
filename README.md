@@ -13,6 +13,7 @@ MyAnimeList Top 10,000 Anime Dataset을 활용하여 애니메이션 작품의 �
 - 장르 다양성
 - 작품 유형
 - 연도 효과
+  
 등 산업적 변수들이 인기 형성에 어떤 영향을 미치는지 검증하였습니다.
 
 ---
@@ -76,7 +77,7 @@ MyAnimeList Top 10,000 Anime Dataset을 활용하여 애니메이션 작품의 �
 ```
 anime-success-analysis/
 │
-├── data/                     # (raw / processed는 Git에 포함되지 않음)
+├── data/                     # (raw / processed는 포함되지 않음)
 │
 ├── notebooks/
 │   ├── 01_eda.ipynb
