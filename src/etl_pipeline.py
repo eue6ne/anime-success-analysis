@@ -39,21 +39,19 @@ CHUNK_SIZE = int(os.getenv("ETL_CHUNK_SIZE", "5000"))
 # -----------------------------
 # Helpers
 # -----------------------------
-def validate_db_config():
+def validate_db_config(): # 환경변수 설정 검사
     missing = [k for k, v in DB.items() if v is None and k != "port"]
     if missing:
-        raise ValueError(
-            f"Missing DB environment variables: {missing}\n"
-            "Set DB_HOST, DB_USER, DB_PASSWORD, DB_NAME before running."
-        )
+        raise ValueError(f"Missing DB environment variables: {missing}\n"
+                          "Set DB_HOST, DB_USER, DB_PASSWORD, DB_NAME before running.")
 
 
-def connect_db():
+def connect_db(): # MySQL 연결 생성
     validate_db_config()
     return mysql.connector.connect(**DB)
 
 
-def df_to_tuples(df: pd.DataFrame) -> List[Tuple]:
+def df_to_tuples(df: pd.DataFrame) -> List[Tuple]: # MySQL insert용 tuple 변환 / NaN을 None 변환
     df = df.where(pd.notnull(df), None)
     return [tuple(r) for r in df.itertuples(index = False, name = None)]
 
@@ -62,21 +60,21 @@ def executemany_in_chunks(cur, sql: str, rows: List[Tuple], chunk_size: int = CH
     if not rows:
         return 0
     total = 0
-    for i in range(0, len(rows), chunk_size):
+    for i in range(0, len(rows), chunk_size): # 대량 insert 시, 메모리/버퍼 문제 방지를 위해 나누어 실행
         batch = rows[i : i + chunk_size]
         cur.executemany(sql, batch)
         total += len(batch)
     return total
 
 
-def clean_genre(g: str) -> str | None:
+def clean_genre(g: str) -> str | None: # 장르 문자열 정제
     if g is None:
         return None
     g = str(g).strip()
     if not g:
         return None
     parts = re.split(r"\s+", g)
-    if len(parts) == 2 and parts[0].lower() == parts[1].lower():
+    if len(parts) == 2 and parts[0].lower() == parts[1].lower(): # "Action Action" 같은 중복 단어 제거
         return parts[0]
     return g
 
@@ -84,7 +82,7 @@ def clean_genre(g: str) -> str | None:
 # -----------------------------
 # Load Steps
 # -----------------------------
-def load_anime_dim(cur) -> int:
+def load_anime_dim(cur) -> int: # anime 기본 정보 테이블 생성
     df = pd.read_csv(RAW_DIR / "anime.csv")
 
     # align schema

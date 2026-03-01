@@ -84,7 +84,7 @@ def build_model_frame(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
     X = df[features].copy()
     y = df["log_members"].copy()
 
-    # 7) statsmodels OLS 안전장치: object 방지
+    # 7) statsmodels OLS 안전장치: object 타입 강제 제거 (ValueError 방지)
     X = X.apply(pd.to_numeric, errors = "coerce").fillna(0).astype(float)
     y = pd.to_numeric(y, errors = "coerce").astype(float)
 
@@ -94,19 +94,9 @@ def build_model_frame(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
 # -------------------------
 # Save processed
 # -------------------------
-def save_splits(
-    X: pd.DataFrame,
-    y: pd.Series,
-    test_size: float = 0.2,
-    random_state: int = 42,
-) -> None:
+def save_splits(X: pd.DataFrame, y: pd.Series, test_size: float = 0.2, random_state: int = 42, ) -> None:
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X,
-        y,
-        test_size = test_size,
-        random_state = random_state,
-    )
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = test_size, random_state = random_state, )
 
     X_train.to_csv(PROCESSED_DIR / "X_train.csv", index = False)
     X_test.to_csv(PROCESSED_DIR / "X_test.csv", index = False)
@@ -114,10 +104,7 @@ def save_splits(
     y_test.to_csv(PROCESSED_DIR / "y_test.csv", index = False)
 
     # 컬럼 목록 저장
-    (PROCESSED_DIR / "feature_columns.txt").write_text(
-        "\n".join(X.columns.tolist()),
-        encoding = "utf-8",
-    )
+    (PROCESSED_DIR / "feature_columns.txt").write_text("\n".join(X.columns.tolist()),encoding = "utf-8", )
 
 
 def main():
