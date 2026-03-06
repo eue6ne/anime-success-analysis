@@ -115,6 +115,10 @@ anime-success-analysis/
 
 ## 7. How to Run
 
+### Environment
+- Python 3.11
+- MySQL 8.0
+
 ### 1. Clone repository
 
 ```bash
